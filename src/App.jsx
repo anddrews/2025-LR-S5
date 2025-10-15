@@ -1,23 +1,22 @@
-import { Component, Fragment } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import {Button} from './components/Button';
-import {Odd} from './components/Odd';
-import {Even} from './components/Even';
+import { Component, Fragment } from 'react';
 
-const arr = [1, 3, 15, 8, 2, 6, 5, 19];
+import { TableCell } from './components/table/TableCell';
+import './App.css';
 
+import { Table } from './components/table/Table';
+
+const BoldCell = ({item}) => <div style={{color: 'red', fontStyle: 'italic', fontWeight: 'bold'}}>{item}</div>
+// some changes
 export class App extends Component {
   render() {
     return (
-      <Fragment>
-        <Button />
-        {
-          arr.map(item => item % 2 ? <Odd /> : <Even />)
-        }
-      </Fragment>
+        <Table
+          items={[[1, 2, 3], [4, 5, 6], [7, 8, 9]]}
+          columns={['first', 'second', 'third']}
+          cellComponent={BoldCell}
+        />
     )
   }
+
 }
 
