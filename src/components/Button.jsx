@@ -1,7 +1,10 @@
 import { Component } from 'react';
-
-export class Button extends Component {
-    render() {
-        return <h1>Button</h1>
-    }
-}
+// import styles from 'button.module.css';
+const styles = {};
+export const Button = ({variant = 'primary', size = 'medium', label, icon, ...rest}) => (
+    <button
+     className={`${styles.button} ${styles[variant]} ${styles[size]}`} {...rest}
+    >
+     {label}
+    </button>
+)
