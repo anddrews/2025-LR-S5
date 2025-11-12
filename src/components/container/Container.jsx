@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Increment } from '../increment/Increment';
 import { Decrement } from '../decrement/Decrement';
 import { Button } from '../button/Button';
-
+    import {CardCount } from '../input/Input';
 import styles from './container.module.css';
 
 export const Container = () => {
@@ -15,19 +15,12 @@ export const Container = () => {
     const ref = useRef(); // {current: null}
 
     useEffect(() => {
-        console.log('from useEffect')
-        if (count.value > 4) {
-            setDisabled(true);
-        }
-
-        // setTimeout(() => {
-        //     handleIncrement();
-        // }, 10000);
+        setCount(prev => prev + 1);
 
         return () => {
             console.log('from return')
         }
-    }, []);
+    }, [location.search]);
 
     return (
         <div ref={ref} className={styles.container}>
@@ -39,6 +32,8 @@ export const Container = () => {
             </div>
             <h3>{count.value}</h3>
             <h3>{memoizedValue.value}</h3>
+            <CardCount setToCart={() => {}} id={3} initialValue={10}/>
+                <a href="/menu">Menu</a>
         </div>
     )
 }
