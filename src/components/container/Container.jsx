@@ -1,18 +1,24 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef, memo, forwardRef } from 'react';
 import { Increment } from '../increment/Increment';
 import { Decrement } from '../decrement/Decrement';
 import { Button } from '../button/Button';
-    import {CardCount } from '../input/Input';
+import {CardCount } from '../input/Input';
 import styles from './container.module.css';
 
-export const Container = () => {
+
+
+
+export const Container = forwardRef((props, ref) => {
     const [count, setCount] = useState({value: 0});
     const [disabled, setDisabled] = useState(false);
 
     const handleIncrement = useCallback(() => setCount(({value}) => ({value: value + 1})), [count]);
     const memoizedValue = useMemo(() => () => count, [disabled]);
-    const memRef = useMemo(() => ({current: null}), []);
-    const ref = useRef(); // {current: null}
+
+    const memoizedMemo = useMemo(() => () => ({current: null}), []);
+    const memoizedCallback = useCallback(() => ({current: null}), []);
+
+    // const ref = useRef(); // {current: null}
 
     useEffect(() => {
         setCount(prev => prev + 1);
@@ -36,4 +42,6 @@ export const Container = () => {
                 <a href="/menu">Menu</a>
         </div>
     )
-}
+})
+
+export const MemoizedContainer = memo(Container, (prev, curr) => false)
