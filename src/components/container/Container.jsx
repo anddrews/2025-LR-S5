@@ -1,31 +1,32 @@
-import { useState, useEffect, useCallback, useMemo, useRef, memo, forwardRef } from 'react';
-import { Increment } from '../increment/Increment';
-import { Decrement } from '../decrement/Decrement';
-import { Button } from '../button/Button';
-import {CardCount } from '../input/Input';
-import styles from './container.module.css';
-import {useSelector, useDispatch, connect} from 'react-redux';
-import  { increment, decrement, incrementByAmount } from '../../store/features/counter';
+import { fetchPosts, setMeals as setMealsAction, clearMeals as clearMealsAction, mealsSelector } from '../../store/mealSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
+const mealsMock = [1, 2, 3, 4]
 
-
-
-export const Container = forwardRef(() => {
+export const Container = () => {
+    const meals = useSelector(mealsSelector(6));
     const dispatch = useDispatch();
-    const count = useSelector(state => state.counter.value);
 
+    const setMeals = () => {
+        dispatch(setMealsAction(mealsMock));
+    }
+    const clearMeals = () => {
+        dispatch(clearMealsAction());
+    }
 
-
+    useEffect(() => {
+        dispatch(fetchPosts())
+    }, [dispatch, fetchPosts]);
+    
     return (
-        <div  className={styles.container}>
-            <div className={styles.containerActions}>
-                {/* <Button onClick={() => {setDisabled(v => !v)}}>Change disable</Button> */}
-                <Button onClick={() => dispatch(increment())}>Increment</Button>
-                {/* <Button  onClick={() => dispatch(decrement())}>Decrement</Button> */}
-                {count}
-            </div>
-        </div>
-    )
-})
-
-export const MemoizedContainer = memo(Container, (prev, curr) => false)
+    <div>
+        <button onClick={setMeals}>Set Meals</button>
+        <button onClick={clearMeals}>Clear Meals</button>
+        {meals.length 
+        ? meals.map(meal => (
+            <div>{JSON.stringify(meal)}</div>
+        ))
+        : <h1>Empty meals</h1>}
+    </div>   )
+}
