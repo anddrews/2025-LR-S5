@@ -1,21 +1,15 @@
-import { useState, useMemo } from 'react'
 import './App.css'
-import {Header } from './header/Header';
-import { Locales } from './context/I18n';
-import { useTranslation } from 'react-i18next';
-import {FilterWrapper} from './components/filter/FilterWrapper'
 
-
-
-function App({a, b}: {a: number, b: number}) {
-  const [count, setCount] = useState(0)
-  const { t  } = useTranslation('translate', {keyPrefix: 'common.components.main'});
-
-  
+function App({name = ''}: {name?: string}) {
   return (
-    <Locales>
-      <FilterWrapper/>
-    </Locales>
+    <>
+    <input id="theme-toggler" type="checkbox"/>
+    <div className="app" style={{['--text-color']: 'green'}}>
+      <h1>Hello World {name} </h1>
+      <p>This is a dummy App component</p>
+    </div>
+    <label htmlFor="theme-toggler">Toggle</label>
+    </>
   )
 }
 
